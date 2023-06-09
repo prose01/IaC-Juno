@@ -7,7 +7,7 @@ pool:
 variables:
   ${{ if eq(variables['Build.SourceBranchName'], 'Test') }}:
     stageName: test
-  ${{ elseif eq(variables['Build.SourceBranchName'], 'master') }}:
+  ${{ elseif eq(variables['Build.SourceBranchName'], 'main') }}:
     stageName: prod
   ${{ else }}:
     stageName: dev
