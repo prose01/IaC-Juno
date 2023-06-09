@@ -1,7 +1,7 @@
 targetScope='subscription'
 
 @description('Name of the App Service.')
-@minLength(5)
+@minLength(4)
 @maxLength(30)
 param projectName string
 
