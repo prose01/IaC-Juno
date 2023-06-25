@@ -38,8 +38,40 @@ resource newRG 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   tags: tags
 }
 
-// module deployed new appService Plan
-module appServicePlan 'br/modules:appserviceplan:2023-06-09' = {
+// // module deployed new appService Plan
+// module appServicePlan 'br/modules:appserviceplan:2023-06-09' = {
+//   name: 'appServicePlan'
+//   scope: newRG
+//   params: {
+//     projectName: projectName
+//     environmentType: environmentType
+//     appServicePlanSkuName: appServicePlanSkuName
+//     appServicePlanInstanceCount: appServicePlanInstanceCount
+//     location: location
+//     tags: tags
+//   }
+// }
+
+// // module deployed new appService
+// module appService 'br/modules:appservice:2023-06-09' = {
+//   name: 'appService'
+//   scope: newRG
+//   params: {    
+//     projectName: '${projectName}API'
+//     environmentType: environmentType
+//     appServicePlanID: appServicePlan.outputs.appServicePlanID
+//     additionalAppSettings: additionalAppSettings
+//     location: location
+//     tags: tags
+//   }
+// }
+
+/////////////////////////
+// No module, No registry
+/////////////////////////
+
+// deployed new appService Plan
+module appServicePlan './appServicePlan.bicep' = {
   name: 'appServicePlan'
   scope: newRG
   params: {
@@ -52,8 +84,8 @@ module appServicePlan 'br/modules:appserviceplan:2023-06-09' = {
   }
 }
 
-// module deployed new appService
-module appService 'br/modules:appservice:2023-06-09' = {
+// deployed new appService
+module appService './appService.bicep' = {
   name: 'appService'
   scope: newRG
   params: {    

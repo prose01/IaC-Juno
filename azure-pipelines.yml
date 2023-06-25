@@ -15,14 +15,24 @@ variables:
 jobs:
 - job:
   steps:
-    - task: AzureCLI@2
-      displayName: Connect to container registry
-      inputs:
-        azureSubscription: $(ContainerRegistryConnectionName)
-        scriptType: pscore
-        scriptLocation: inlineScript
-        inlineScript: |
-          az acr login --name $(ContainerRegistryName) --expose-token
+    # - task: AzureCLI@2
+    #   displayName: Connect to container registry
+    #   inputs:
+    #     azureSubscription: $(ContainerRegistryConnectionName)
+    #     scriptType: pscore
+    #     scriptLocation: inlineScript
+    #     inlineScript: |
+    #       az acr login --name $(ContainerRegistryName) --expose-token
+    # - task: AzureCLI@2
+    #   inputs:
+    #     azureSubscription: $(ServiceConnectionName-${{variables.stageName}})
+    #     scriptType: 'bash'
+    #     scriptLocation: 'inlineScript'
+    #     inlineScript: |
+    #       az deployment sub create \
+    #         --location westeurope \
+    #         --template-file $(Build.sourcesdirectory)/IaC/*.bicep \
+    #         --parameters $(Build.sourcesdirectory)/IaC/parameters.${{variables.stageName}}.json \
     - task: AzureCLI@2
       inputs:
         azureSubscription: $(ServiceConnectionName-${{variables.stageName}})
@@ -31,5 +41,5 @@ jobs:
         inlineScript: |
           az deployment sub create \
             --location westeurope \
-            --template-file $(Build.sourcesdirectory)/IaC/*.bicep \
+            --template-file $(Build.sourcesdirectory)/IaC/Juno.bicep \
             --parameters $(Build.sourcesdirectory)/IaC/parameters.${{variables.stageName}}.json \
